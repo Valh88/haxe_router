@@ -1,0 +1,15 @@
+-cp source
+# -cp test
+-main Main
+# -dce full
+# --library hxasync
+# --resource Assets/css/styles.css
+--library haxeui-core
+--library haxeui-html5
+-lib utest
+ --js bin/js/Main.js
+# --cpp bin/cpp
+
+# --interp
+# --cmd command
+# haxelib run formatter -s src   

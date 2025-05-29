@@ -1,0 +1,13 @@
+{
+	"name": "Router",
+	"license": "MIT",
+	"tags": ["haxe_ui"],
+	"description": "",
+	"version": "0.1.0",
+	"releasenote": "",
+	"contributors": ["vano"],
+	"dependencies": {
+	
+	},
+	"classPath": "source"
+}
