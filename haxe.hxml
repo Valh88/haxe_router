@@ -1,6 +1,6 @@
 -cp source
 # -cp test
--main Main
+# -main Main
 # -dce full
 # --library hxasync
 # --resource Assets/css/styles.css
