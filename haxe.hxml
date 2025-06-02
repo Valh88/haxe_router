@@ -7,7 +7,7 @@
 --library haxeui-core
 --library haxeui-html5
 -lib utest
- --js bin/js/Main.js
+# --js bin/js/Main.js
 # --cpp bin/cpp
 
 # --interp
