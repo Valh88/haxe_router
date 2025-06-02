@@ -44,6 +44,7 @@ class Router extends ARouter
 		}
 
 		var allParams = new Map<String, String>();
+		var queryOnlyParams = new Map<String, String>();
 
 		for (k in pathParams.keys())
 		{
@@ -53,6 +54,7 @@ class Router extends ARouter
 		for (k in queryParams.keys())
 		{
 			allParams[k] = queryParams[k];
+			queryOnlyParams[k] = queryParams[k];
 		}
 
 		if (params != null)
@@ -60,6 +62,7 @@ class Router extends ARouter
 			for (k in params.keys())
 			{
 				allParams[k] = params[k];
+				queryOnlyParams[k] = params[k];
 			}
 		}
 
@@ -73,8 +76,20 @@ class Router extends ARouter
 		_injectParams(_currentView, allParams);
 
 		_rootContainer.addComponent(_currentView);
-		_history.push(path);
-		_updatePlatformHistory(path, allParams);
+		
+		var fullUrl = path;
+		if (queryOnlyParams.keys().hasNext())
+		{
+			var queryParts = [];
+			for (key in queryOnlyParams.keys())
+			{
+				queryParts.push('${StringTools.urlEncode(key)}=${StringTools.urlEncode(queryOnlyParams.get(key))}');
+			}
+			fullUrl += "?" + queryParts.join("&");
+		}
+		
+		_history.push(fullUrl);
+		_updatePlatformHistory(path, queryOnlyParams);
 
 		return true;
 	}
@@ -163,8 +178,22 @@ class Router extends ARouter
 	function _updatePlatformHistory(path:String, ?params:Map<String, String>):Void
 	{
 		#if js
-		var state:Dynamic = {params: params};
-		js.Browser.window.history.pushState(state, '', path);
+        var state:Dynamic = {params: params};
+    
+        var url = path;
+        if (params != null) {
+            var queryParts = [];
+            for (key in params.keys()) {
+                if (path.indexOf(':$key') == -1) {
+                    queryParts.push('${StringTools.urlEncode(key)}=${StringTools.urlEncode(params.get(key))}');
+                }
+            }
+            if (queryParts.length > 0) {
+                url += "?" + queryParts.join("&");
+            }
+        }
+        
+        js.Browser.window.history.pushState(state, '', url);
 		#elseif android
 		#elseif ios
 		#end

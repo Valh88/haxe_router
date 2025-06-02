@@ -34,13 +34,13 @@ class Main
 			button.text = "Go to products";
 			button.onClick = function(e)
 			{
-				router.navigate("/products/123/huy?category=electronics&sort=price");
+				router.navigate("/products/123", ["category" => "electronics", "sort" => "price"]);
 			};
 			view.addComponent(button);
 			return view;
 		});
 
-		router.addRoute("/products/:id/:huy", () ->
+		router.addRoute("/products/:id", () ->
 		{
 			var view = new Label();
 			return view;
