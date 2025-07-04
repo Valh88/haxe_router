@@ -75,7 +75,10 @@ class Router extends ARouter
 		_currentParams = allParams;
 		_injectParams(_currentView, allParams);
 
-		_rootContainer.addComponent(_currentView);
+		// _rootContainer.addComponent(_currentView);
+		var insertIndex = _rootContainer.numComponents - 1;
+		if (insertIndex < 0) insertIndex = 0;
+		_rootContainer.addComponentAt(_currentView, insertIndex);
 		
 		var fullUrl = path;
 		if (queryOnlyParams.keys().hasNext())
